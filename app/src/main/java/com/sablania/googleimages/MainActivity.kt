@@ -18,6 +18,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initView() {
+        binding.apply {
+            btnSearch.setOnClickListener {
+                val searchStr = tietSearch.text.toString()
+                if (searchStr.isEmpty()) {
+                    Toast.makeText(this@MainActivity, R.string.please_enter_some_text_to_search, Toast.LENGTH_LONG).show()
+                    return@setOnClickListener
+                }
 
+                SearchResultActivity.start(this@MainActivity, searchStr)
+            }
+        }
     }
 }
