@@ -62,6 +62,10 @@ class SearchResultActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Opening link with Android browser; Though a third in app screen can also be implemented;
+     * Due to lack of time I was unable to
+     */
     private fun onItemClick(item: GoogleImage) {
         val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(item.link))
         startActivity(browserIntent)

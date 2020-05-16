@@ -16,10 +16,15 @@ import com.sablania.googleimages.pojos.GoogleImageResp
 class GoogleImageRepository(val context: Application) {
     val TAG = GoogleImageRepository::class.java.simpleName
 
-    val googleImageLiveData = MutableLiveData<GoogleImageResp>()
+    private val googleImageLiveData = MutableLiveData<GoogleImageResp>()
 
     fun getGoogleImageLiveData(): LiveData<GoogleImageResp> = googleImageLiveData
 
+    /**
+     * This function will fetch google images from api;
+     * Though api is paginated but for now it'll always fetch first page;
+     * We can implement Custom Infinite scroll for pagination or PagingLibrary(JetPack) can be used
+     */
     fun searchGoogleImage(searchStr: String?) {
         var api =
             "https://www.googleapis.com/customsearch/v1?q=$searchStr&cx=011476162607576381860:ra4vmliv9ti&key=AIzaSyDoYFAxDR1NfAraumLZigWveB1s-zCYA5s"
@@ -37,6 +42,8 @@ class GoogleImageRepository(val context: Application) {
             },
             Response.ErrorListener {
                 Log.i(TAG, "error")
+
+                //TODO Error liveData can also be implemented to listen to api errors
 //                errorLiveData.postValue(true)
             })
         Volley.newRequestQueue(context).add(request)
