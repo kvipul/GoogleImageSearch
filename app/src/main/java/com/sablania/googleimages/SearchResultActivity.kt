@@ -2,11 +2,10 @@ package com.sablania.googleimages
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -54,10 +53,17 @@ class SearchResultActivity : AppCompatActivity() {
 
     private fun initView() {
         binding.apply {
-            adapter = GoogleImageAdapter()
+            adapter = GoogleImageAdapter({
+                onItemClick(it)
+            })
             rvImages.adapter = adapter
             rvImages.layoutManager = LinearLayoutManager(this@SearchResultActivity)
             rvImages.addItemDecoration(DividerItemDecoration(this@SearchResultActivity, DividerItemDecoration.VERTICAL))
         }
+    }
+
+    private fun onItemClick(item: GoogleImage) {
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(item.link))
+        startActivity(browserIntent)
     }
 }

@@ -10,7 +10,7 @@ import com.sablania.googleimages.R
 import com.sablania.googleimages.databinding.ItemGoogleImageBinding
 import com.sablania.googleimages.pojos.GoogleImage
 
-class GoogleImageAdapter : RecyclerView.Adapter<GoogleImageAdapter.GoogleImageViewHolder>() {
+class GoogleImageAdapter(val onItemClick : (GoogleImage) -> Unit) : RecyclerView.Adapter<GoogleImageAdapter.GoogleImageViewHolder>() {
 
     var list = ArrayList<GoogleImage>()
         set(value) {
@@ -19,7 +19,7 @@ class GoogleImageAdapter : RecyclerView.Adapter<GoogleImageAdapter.GoogleImageVi
             notifyDataSetChanged()
         }
 
-    class GoogleImageViewHolder(val binding: ItemGoogleImageBinding) :
+    inner class GoogleImageViewHolder(val binding: ItemGoogleImageBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: GoogleImage) {
             binding.apply {
@@ -28,6 +28,9 @@ class GoogleImageAdapter : RecyclerView.Adapter<GoogleImageAdapter.GoogleImageVi
                 Glide.with(itemView.context)
                     .load(item.pagemap?.cse_thumbnail?.get(0)?.src)
                     .into(ivThumbnail)
+                container.setOnClickListener{
+                    onItemClick.invoke(item)
+                }
             }
         }
     }

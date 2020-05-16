@@ -5,7 +5,8 @@ import com.google.gson.annotations.SerializedName
 data class GoogleImage(
     @SerializedName("htmlTitle") val htmlTitle: String?,
     @SerializedName("htmlSnippet") val htmlSnippet: String?,
-    @SerializedName("pagemap") val pagemap: Pagemap?
+    @SerializedName("pagemap") val pagemap: Pagemap?,
+    @SerializedName("link") val link: String
 )
 
 class Pagemap(
